@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nightscout
+  name: nightscout
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:
+      io.kompose.service: nightscout
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nightscout
+    spec:
+      {{ if .Values.nodeSelector.active }}
+      nodeSelector:
+        kubernetes.io/hostname: {{ .Values.nodeSelector.hostname }}
+      {{ end }}
+      containers:
+      - env:
+        - name: API_SECRET
+          value: {{ .Values.nightscout.apisecret }}
+        - name: AUTH_DEFAULT_ROLES
+          value: readable
+        - name: INSECURE_USE_HTTP
+          value: "true"
+        - name: SECURE_HSTS_HEADER
+          value: "false"
+        - name: BG_HIGH
+          value: "220"
+        - name: BG_LOW
+          value: "60"
+        - name: BG_TARGET_BOTTOM
+          value: "80"
+        - name: BG_TARGET_TOP
+          value: "180"
+        - name: ENABLE
+          value: careportal boluscalc food bwp cage sage iage iob cob basal ar2 rawbg pushover bgi pump openaps cors
+        - name: DEVICESTATUS_ADVANCED
+          value: "true"
+        - name: PUMP_FIELDS
+          value: reservoir battery clock
+        - name: PUMP_WARN_BATT_P
+          value: "51"
+        - name: PUMP_URGENT_BATT_P
+          value: "26"
+        - name: MONGO_CONNECTION
+          value: mongodb://mongo:27017/nightscout
+        - name: TZ
+          value: Europe/Berlin
+        image: {{ .Values.nightscout.image }}:{{ .Chart.AppVersion }}
+        imagePullPolicy: Always
+        name: nightscout
+        ports:
+        - containerPort: 1337
+        resources: {}
+      restartPolicy: Always
+status: {}
