@@ -1,3 +1,14 @@
 apiVersion: v1
-entries: {}
-generated: "2021-11-27T17:27:11.387386+01:00"
+entries:
+  nightscout-helm-chart:
+  - apiVersion: v2
+    appVersion: 14.2.2
+    created: "2021-11-27T17:32:46.698198+01:00"
+    description: A Helm chart for Kubernetes
+    digest: fa3b7ac34e2b37df92a3863f7eb1e999d73a5ab0aa5e9d8c7aead590d5bb4201
+    name: nightscout-helm-chart
+    type: application
+    urls:
+    - https://dhermanns.github.io/nightscout-helm-chart/nightscout-helm-chart-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-11-27T17:32:46.69709+01:00"
