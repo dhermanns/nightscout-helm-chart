@@ -23,6 +23,8 @@ ingress:
   hosts:
     - host: mynightscout.duckdns.org
     - host: night-t.lan
+  tlshosts:
+    - host: mynightscout.duckdns.org
 
 # Activate a default Ingress, so that nightscout is accessible for all incoming hosts using Port 80:
 defaultIngress:
